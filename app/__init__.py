@@ -9,9 +9,10 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 
 # Função para gerar token JWT
-def generate_jwt_token(user_id):
+def generate_jwt_token(user_id, roles):
     payload = {
         'sub': user_id,
+        'roles': roles,
         'exp': datetime.now(timezone.utc) + timedelta(days=1)
     }
     token = jwt.encode(payload, app.config['SECRET_KEY'], algorithm='HS256')

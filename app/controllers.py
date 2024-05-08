@@ -34,7 +34,7 @@ def login():
     password = data['password']
     user = authenticate(username, password)
     if user:
-        token = generate_jwt_token(user.id)
+        token = generate_jwt_token(user['id'], user['roles'])
         return jsonify({'token': token})
     return jsonify({'message': 'Invalid credentials'}), 401
 
@@ -48,6 +48,9 @@ def teste():
     user = authenticate_user(token)
     if not user:
         return jsonify({'message': 'Invalid token'}), 401
+    
+    if "CGM" in jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])['roles']:
+        # Se o usuário estiver autenticado, continue com a lógica da rota
+        return jsonify({'message': 'This is a protected route'})
 
-    # Se o usuário estiver autenticado, continue com a lógica da rota
-    return jsonify({'message': 'This is a protected route'})
+    return jsonify({'message': 'Você não tem permissão para acessar essa rota'})

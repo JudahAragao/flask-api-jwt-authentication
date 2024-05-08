@@ -1,7 +1,11 @@
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 
-load_dotenv()
+# .env.prod = .env de prodição
+# .env.dev = .env de desenvolvimento
+dotenv_path = Path('.env.dev')
+load_dotenv(dotenv_path=dotenv_path)
 
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY')

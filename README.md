@@ -1,4 +1,4 @@
-# Flask Api Example
+# Flask Api JWT Authentication
 
 Example of a python api made with the flask framework.
 
